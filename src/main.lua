@@ -17,6 +17,11 @@ function love.load(args)
 	chronoBoost = love.graphics.newImage("asset/graph/chronoBoost.png")
 
 	--player = thePlayer.new()
+	src1 = love.audio.newSource("asset/sound/BGM.mp3")
+
+	src1:setVolume(1)
+
+	src1:play()
 	
 	love.generate()
 end

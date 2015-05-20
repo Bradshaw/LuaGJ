@@ -81,6 +81,16 @@ function dungeon_mt:generate(x)
 		end
 	end
 	self:setTile(exit.x,exit.y,tile.new(tile.id.exit, 1))
+	for i=2,d.w - 1 do
+		for j=2,d.h - 1 do
+			if self:getTile(i,j).id == tile.id.floor then
+				exit.x = i
+				exit.y = j
+				break
+			end
+		end
+	end
+	table.insert( self.chronos, love.tablelength(self.chronos) + 1, anychrono.new(exit.x, exit.y, math.random( 10 ), love.tablelength(self.chronos) + 1) )
 	--self:cleanOne()
 	return {x = x, y = 2}
 end
@@ -154,9 +164,6 @@ function dungeon_mt:generateBranch(x, y)
 
 	if nx > 1 and nx <= self.w - 1 and ny > 1 and ny <= self.h - 1 and self:getTile(nx,ny).id == tile.id.wall then
 		self:generateBranch(nx,ny)
-	else
-		print( love.tablelength(self.chronos) )
-	    table.insert( self.chronos, love.tablelength(self.chronos) + 1, anychrono.new(x, y, math.random( 10 ), love.tablelength(self.chronos) + 1) )
 	end
 
 end
