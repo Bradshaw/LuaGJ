@@ -155,7 +155,8 @@ function dungeon_mt:generateBranch(x, y)
 	if nx > 1 and nx <= self.w - 1 and ny > 1 and ny <= self.h - 1 and self:getTile(nx,ny).id == tile.id.wall then
 		self:generateBranch(nx,ny)
 	else
-	    table.insert( self.chronos, anychrono.new(x, y, math.random( 10 )) )
+		print( love.tablelength(self.chronos) )
+	    table.insert( self.chronos, love.tablelength(self.chronos) + 1, anychrono.new(x, y, math.random( 10 ), love.tablelength(self.chronos) + 1) )
 	end
 
 end

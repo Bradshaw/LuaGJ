@@ -72,10 +72,9 @@ function love.generate(x)
 		timer = { time = 0, color = {r = 15, g = 105, b = 230}}
 	end
 
-	chrono = d:getChronos()
-
 	d = dungeon.new()
 	pos = d:generate(x)
+	chrono = d:getChronos()
 	player.img = love.graphics.newImage("asset/graph/Player.png")
 	p = player.new(pos.x, pos.y, 5)
 end
@@ -96,6 +95,9 @@ function love.draw()
 				love.graphics.draw(exit, i*tileSize, j*tileSize)
 			end
 		end
+	end
+	for _,v in ipairs(chrono) do
+		love.graphics.draw(chronoBoost, v.x * tileSize, v.y * tileSize)
 	end
 	love.graphics.draw(player.img, p.x * tileSize + player.img:getWidth() / 2, p.y * tileSize + player.img:getHeight() / 2)
 	love.graphics.setColor(timer.color.r, timer.color.g, timer.color.b)
@@ -131,7 +133,7 @@ function love.getChrono(x, y)
 end
 
 function love.removeChrono(chro)
-	table.remove( chrono, chro )
+	table.remove( chrono, chro.index )
 end
 
 function love.keypressed(key)
@@ -148,4 +150,10 @@ function love.keypressed(key)
 	elseif key == "down" and d:getTile(love.round(p.x, 0),love.round(p.y + player.img:getHeight() + p.speed * delta, 0)).id ~= tile.id.wall then
 		p.y = p.y + p.speed * delta]]
 	end
+end
+
+function love.tablelength(T)
+  local count = 0
+  for _ in pairs(T) do count = count + 1 end
+  return count
 end
