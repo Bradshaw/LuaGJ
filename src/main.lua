@@ -27,7 +27,7 @@ function love.load(args)
 end
 
 function love.update(dt)
-	timer.time = timer.time + dt
+	timer.time = timer.time - dt
 
 	if coolDownMove > 0 then
 		coolDownMove = coolDownMove - dt
@@ -60,12 +60,16 @@ function love.update(dt)
 
 	if love.onChrono() then
 		chrono = love.getChrono(p.x, p.y)
-		timer.time = timer.time - chrono.time
+		timer.time = timer.time + chrono.time
 		love.removeChrono(chrono)
 	end
 
 	if d:getTile(p.x, p.y).id == tile.id.exit then
-	    love.win()
+	    love.winRound()
+	end
+
+	if timer.time <= 0 then
+		love.lose()
 	end
 
 end
@@ -74,7 +78,7 @@ function love.generate(x)
 	if x then
 		timer.color = {r = timer.color.r + 15, g = timer.color.g + 15, b = timer.color.b + 15}
 	else
-		timer = { time = 0, color = {r = 15, g = 105, b = 230}}
+		timer = { time = 60, color = {r = 15, g = 105, b = 230}}
 	end
 
 	d = dungeon.new()
@@ -116,8 +120,16 @@ function love.round(number, amount)
 	return num
 end
 
-function love.win()
+function love.winRound()
 	love.generate(p.x)
+end
+
+function love.win()
+	love.generate()
+end
+
+function love.lose()
+	love.generate()
 end
 
 function love.onChrono()
