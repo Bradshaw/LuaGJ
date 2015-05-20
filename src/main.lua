@@ -3,7 +3,7 @@ function love.load(args)
 	dungeon = require("dungeon")
 	tile = require("tile")
 
-	tileSize = 20
+	tileSize = 40
 
 	--player = thePlayer.new()
 	--player.img = love.graphics.newImage("image/kingflanyoda.png")
@@ -12,8 +12,7 @@ function love.load(args)
 end
 
 function love.update(dt)
-	local time = love.timer.getDelta()
-	timer = timer + time
+	timer = timer + dt
 end
 
 function love.generate()
@@ -25,12 +24,25 @@ end
 function love.draw()
 	for i=1,d.w do
 		for j=1,d.h do
+			--if d:getTile(i,j).id==tile.id.wall then
+				love.graphics.setColor(125, 255, 125)
+				love.graphics.rectangle("fill", i*tileSize, j*tileSize, tileSize, tileSize)
+			--end
+		end
+	end
+	for i=1,d.w do
+		for j=1,d.h do
 			if d:getTile(i,j).id==tile.id.floor then
-				love.graphics.setColor(0, 255, 255)
-			elseif d:getTile(i,j).id==tile.id.wall then
-				love.graphics.setColor(0, 255, 0)
+				--[[
+				love.graphics.setColor(95, 7, 7)
+				love.graphics.rectangle("fill", i*tileSize - 2, j*tileSize, 2, tileSize)
+				love.graphics.rectangle("fill", i*tileSize- 2 , j*tileSize, 2, tileSize)
+				--]]--
+				love.graphics.setColor(150, 150, 150)
+				love.graphics.rectangle("fill", i*tileSize, j*tileSize, tileSize, tileSize)
+				love.graphics.setColor(255, 0, 0)
+				--love.graphics.print(i .. " " .. j, i*tileSize, j*tileSize)
 			end
-			love.graphics.rectangle("fill", i*tileSize, j*tileSize, tileSize, tileSize)
 		end
 	end
 	love.graphics.setColor(255, 0, 0)
