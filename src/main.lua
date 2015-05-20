@@ -4,6 +4,7 @@ function love.load(args)
 	tile = require("tile")
 
 	tileSize = 40
+	delta = 0
 
 	--player = thePlayer.new()
 	--player.img = love.graphics.newImage("image/kingflanyoda.png")
@@ -12,7 +13,8 @@ function love.load(args)
 end
 
 function love.update(dt)
-	timer = timer + dt
+	delta = dt
+	timer = timer + delta
 end
 
 function love.generate()
@@ -24,25 +26,18 @@ end
 function love.draw()
 	for i=1,d.w do
 		for j=1,d.h do
-			--if d:getTile(i,j).id==tile.id.wall then
-				love.graphics.setColor(125, 255, 125)
-				love.graphics.rectangle("fill", i*tileSize, j*tileSize, tileSize, tileSize)
-			--end
-		end
-	end
-	for i=1,d.w do
-		for j=1,d.h do
 			if d:getTile(i,j).id==tile.id.floor then
-				--[[
-				love.graphics.setColor(95, 7, 7)
-				love.graphics.rectangle("fill", i*tileSize - 2, j*tileSize, 2, tileSize)
-				love.graphics.rectangle("fill", i*tileSize- 2 , j*tileSize, 2, tileSize)
-				--]]--
 				love.graphics.setColor(150, 150, 150)
-				love.graphics.rectangle("fill", i*tileSize, j*tileSize, tileSize, tileSize)
-				love.graphics.setColor(255, 0, 0)
-				--love.graphics.print(i .. " " .. j, i*tileSize, j*tileSize)
+			elseif d:getTile(i,j).id==tile.id.enter then
+				love.graphics.setColor(0, 0, 0)
+			elseif d:getTile(i,j).id==tile.id.exit then
+				love.graphics.setColor(255, 255, 255)
+			elseif d:getTile(i,j).id==tile.id.wall then
+				love.graphics.setColor(125, 255, 125)
 			end
+			love.graphics.rectangle("fill", i*tileSize, j*tileSize, tileSize, tileSize)
+			love.graphics.setColor(255, 0, 0)
+			--love.graphics.print(i .. " " .. j, i*tileSize, j*tileSize)
 		end
 	end
 	love.graphics.setColor(255, 0, 0)
@@ -64,6 +59,7 @@ function love.keypressed(key)
 	elseif key == " " then
 		love.generate()
 	elseif key == "left" then
+		
 	elseif key == "right" then
 	elseif key == "up" then
 	elseif key == "down" then

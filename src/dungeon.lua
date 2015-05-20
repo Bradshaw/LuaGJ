@@ -66,6 +66,7 @@ function dungeon_mt:generate(x)
 	local x = x or love.round(rand * (self.w - 1), 0) + 1
 	self:clean()
 	self:generatePath(x, 1)
+	self:setTile(x,1,tile.new(tile.id.enter, 1))
 	self:generateBranches()
 	--self:cleanOne()
 end
@@ -114,6 +115,8 @@ function dungeon_mt:generatePath(x,y)
 		self:generatePath(nx,ny)
 	elseif self:getTile(nx,ny).id ~= tile.id.wall and y + 1 <= self.h then
 	    self:generatePath(x,y)
+	else
+		self:setTile(x,y,tile.new(tile.id.exit, 1))
 	end
 end
 
